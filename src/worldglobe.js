@@ -78,7 +78,7 @@ function main() {
     // Loading the scene
     let earth, text; {
         const gltfLoader = new GLTFLoader();
-        gltfLoader.load('./../assets/globe.gltf', (gltf) => {
+        gltfLoader.load('https://jhonj624.github.io/arlene.github.io/assets/globe.gltf', (gltf) => {
             // gltf.scene.children[0].scale.set(0.1, 0.1, 0.1);
             const root = gltf.scene;
             scene.add(root);
