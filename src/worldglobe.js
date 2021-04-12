@@ -7,15 +7,15 @@ function main() {
     const renderer = new THREE.WebGLRenderer({ canvas });
 
     const fov = 45;
-    const aspect = 2;
-    const near = 0.1;
+    const aspect = window.innerWidth;
+    const near = window.innerHeight;
     const far = 100;
 
     const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.set(0, 10, 20);
 
     const controls = new OrbitControls(camera, canvas);
-    controls.target.set(0, 5, 0);
+    controls.enablePan = false;
     controls.update();
 
     const scene = new THREE.Scene();
@@ -56,7 +56,8 @@ function main() {
 
         // move the camera to a position distance units way from the center
         // in whatever direction the camera was from the center already
-        camera.position.copy(direction.multiplyScalar(distance).add(boxCenter));
+        let newpos = direction.multiplyScalar(distance).add(boxCenter)
+        camera.position.copy(newpos);
 
         // pick some near and far values for the frustum that
         // will contain the box.
@@ -93,12 +94,14 @@ function main() {
             const boxCenter = box.getCenter(new THREE.Vector3());
 
             // set the camera to frame the box
-            frameArea(boxSize * 0.5, boxSize, boxCenter, camera);
+            frameArea(boxSize * 0.75, boxSize, boxCenter, camera);
 
             // update the Trackball controls to handle the new size
-            controls.maxDistance = boxSize * 10;
+            controls.maxDistance = boxSize * 2; // dolly out
+            controls.minDistance = boxSize / 3; // dolly in
             controls.target.copy(boxCenter);
             controls.update();
+
         }, onProgress);
     }
 
