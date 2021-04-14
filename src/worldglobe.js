@@ -51,7 +51,7 @@ function main() {
         // in the xz plane from the center of the box
         const direction = (new THREE.Vector3())
             .subVectors(camera.position, boxCenter)
-            .multiply(new THREE.Vector3(1, 0, 1))
+            .multiply(new THREE.Vector3(0, 10, 10))
             .normalize();
 
         // move the camera to a position distance units way from the center
@@ -80,6 +80,7 @@ function main() {
     let earth, text; {
         const gltfLoader = new GLTFLoader();
         gltfLoader.load('https://jhonj624.github.io/arlene.github.io/assets/globe.gltf', (gltf) => {
+            //gltfLoader.load('./../assets/globe.gltf', (gltf) => {
             // gltf.scene.children[0].scale.set(0.1, 0.1, 0.1);
             const root = gltf.scene;
             scene.add(root);
@@ -94,12 +95,13 @@ function main() {
             const boxCenter = box.getCenter(new THREE.Vector3());
 
             // set the camera to frame the box
-            frameArea(boxSize * 0.75, boxSize, boxCenter, camera);
+            frameArea(boxSize * 1.0, boxSize, boxCenter, camera);
 
             // update the Trackball controls to handle the new size
             controls.maxDistance = boxSize * 2; // dolly out
             controls.minDistance = boxSize / 3; // dolly in
             controls.target.copy(boxCenter);
+
             controls.update();
 
         }, onProgress);
